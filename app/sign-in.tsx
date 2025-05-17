@@ -6,16 +6,34 @@ import {
 //   SafeAreaView,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React from "react";
 // import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { login } from "@/lib/appwrite";
+import { useGlobalContext } from "@/lib/global-provider";
+import { Redirect } from "expo-router";
 
 const SignIn = () => {
-  const handleSignIn = () => {
+const {refetch, loading, isLogged} = useGlobalContext();
+
+
+  if(!loading && isLogged) return <Redirect href="/" />;
+
+  const handleSignIn = async () => {
     console.log("Sign in with Google");
+    const result = await login();
+
+    if(result) {
+      console.log("Login successful"+ result);
+      refetch();
+    }else {
+      console.log("Login failed");
+      Alert.alert("title","Login failed");
+    }
   };
 
   return (

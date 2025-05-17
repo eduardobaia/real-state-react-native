@@ -1,17 +1,17 @@
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react"; 
-import './global.css'; 
+import React, { useEffect } from "react";
+import "./global.css";
 import {
   SafeAreaView,
   SafeAreaProvider,
   SafeAreaInsetsContext,
   useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+} from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
+import { GlobalProvider } from "@/lib/global-provider";
 
 export default function RootLayout() {
-
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
     "Rubik-ExtraBold": require("../assets/fonts/Rubik-ExtraBold.ttf"),
@@ -34,12 +34,10 @@ export default function RootLayout() {
   // return  <Stack screenOptions={{ headerShown: false }} />;
 
   return (
-  <SafeAreaProvider>
-
-    <Stack screenOptions={{ headerShown: false }} />
-
-</SafeAreaProvider>
-
-);
-  
+    <GlobalProvider>
+      <SafeAreaProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </SafeAreaProvider>
+    </GlobalProvider>
+  );
 }

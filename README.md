@@ -1,60 +1,96 @@
-# Welcome to your Expo app 👋
+# 🏡 Real Estate App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile application for browsing, buying, and renting real estate properties. Built with **React Native** using modern design, smooth navigation, and integration with property listing APIs.
 
-## Get started
+![Banner](./assets/readme/home.jpg)
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Features
 
-2. Start the app
+- 📍 Browse properties by location
+- 🔍 Filter by type, price, and area
+- 🏠 View detailed property information
+- ❤️ Save properties as favorites
+- 📞 Contact property owners directly
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🧪 Tech Stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- React Native (Expo)
+- TypeScript
+- React Navigation
+- Axios
+- Firebase (authentication & database)
+- Styled Components
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📱 Screenshots
 
-When you're ready, run:
+### 🏠 Home & Explore Screens
 
-```bash
-npm run reset-project
-```
+<div align="center">
+  <img src="./assets/readme/prehome.jpg" alt="Pre-Home Screen" width="250" />
+  <img src="./assets/readme/initial.jpg" alt="Initial Screen" width="250" />
+  <img src="./assets/readme/home.jpg" alt="Home Screen" width="250" />
+  <img src="./assets/readme/explore.jpg" alt="Explore Screen" width="250" />
+</div>
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+### ❤️ Property Recommendations
 
-To learn more about developing your project with Expo, look at the following resources:
+<div align="center">
+  <img src="./assets/readme/recomendations.jpg" alt="Recommendations 1" width="250" />
+  <img src="./assets/readme/recomendantions2.jpg" alt="Recommendations 2" width="250" />
+</div>
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+### 📋 Property Details
 
-Join our community of developers creating universal apps.
+<div align="center">
+  <img src="./assets/readme/details.jpg" alt="Property Details Screen" width="250" />
+</div>
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+ 
+git clone https://github.com/eduardobaia/real-state-react-native.git
+cd real-state-react-native
 
 
 
-#PLUS
+### 2. Install dependencies
+
+npm install
+# or
+yarn install
+
+### 3. Start the development server (Expo)
+
+npx expo start
+
+### 🛠 Project Structure
+
+.
+├── assets/
+│   └── readme/           # Screenshots for README
+├── components/           # Reusable UI components
+├── screens/              # Main screen components
+├── navigation/           # App navigation config
+├── services/             # API calls, firebase, etc.
+├── App.tsx               # App entry point
+└── ...
 
 
-#Install write dependencies 
-npx expo install react-native-appwrite react-native-url-polyfill
+---
+### 👨‍💻 Author
 
-#Install use debounce for search
+Made with ❤️ by Eduardo Baia

@@ -1,70 +1,105 @@
- import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
- import React from 'react'
- import { SafeAreaView } from 'react-native-safe-area-context';
-import images from '@/constants/images';
-import icons from '@/constants/icons';
+import { Card, FeatureCard } from "@/components/Card";
+import Filters from "@/components/Filters";
+import Search from "@/components/Search";
+import icons from "@/constants/icons";
+import images from "@/constants/images";
+import { useGlobalContext } from "@/lib/global-provider";
+import { Link, router, useLocalSearchParams } from "expo-router";
+import {
+  ActivityIndicator,
+  Button,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import seed from "@/lib/seed";
+import { useAppwrite } from "@/lib/useAppwrite";
+import { getLatestProperties, getProperties } from "@/lib/appwrite";
+import { useEffect } from "react";
+import NoResults from "@/components/NoResults";
 
- const Explore = () => {
-  const handleSignIn = () => {
-    console.log("Sign in with Google");
+export default function Explore() {
+  const params = useLocalSearchParams<{ query?: string; filter?: string }>();
+
+  const {
+    data: properties,
+    loading,
+    refetch,
+  } = useAppwrite({
+    fn: getProperties,
+    params: {
+      filter: params.filter!,
+      query: params.query!,
+      limit: 20,
+    },
+    skip: true,
+  });
+
+  useEffect(() => {
+    refetch({
+      filter: params.filter!,
+      query: params.query!,
+      limit: 20,
+    });
+  }, [params.filter, params.query]);
+
+  const handleCardPress = (propertyId: string) => {
+    // Navigate to the property details page
+    console.log("Navigating to property:", propertyId);
+    router.push(`/property/${propertyId}`);
   };
 
-   return (
- 
-        <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      {/* <ScrollView contentContainerClassName="flex-grow"> */}
-   <ScrollView contentContainerClassName="flex-grow">
-           <Image
-             source={images.onboarding}
-             className="w-full h-4/6"
-             resizeMode="contain"
-           />
-   
-           <View className="px-10">
-             <Text className="text-base text-center uppercase font-rubik text-black-500">
-               Welcome to ReState
-             </Text>
-   
-             <Text className="text-3xl font-rubik-bold text-black-300 text-center mt-2">
-               Let's get you closer to {"\n"}
-               <Text className="text-primary-300">your ideal Home</Text>
-             </Text>
-   
-             <Text className="text-lg font-rubik text-black-200 text-center mt-12">
-               Sign in to your account Login to ReState with google
-             </Text>
-   
-             <TouchableOpacity
-               className="bg-white shadow-md shadow-zinc-300 rounded-full w-full py-4 mt-5"
-               onPress={handleSignIn}
-             >
-               <View className="flex flex-row items-center justify-center">
-               <Image
-                 source={icons.google}
-                 className="w-5 h-5 "
-                 resizeMode="contain"
-               />
-               <Text className="tezt-lg font-rubik-medium text-black-300 ml-2">Continue with Google</Text>
-                   </View>
-           
-             </TouchableOpacity>
-   
-             
-             
-           </View>
-         
-           <View className="px-10">
-               <Text className="text-lg font-rubik text-black-200 text-center mt-12">
-                   Don't have an account?{" "}
-                   <Text className="text-primary-300">Sign up</Text>
-               </Text>
-             
-           </View>
-     
-         </ScrollView>
-        
-        </SafeAreaView>
-   )
- }
+  // console.log("User:", user);
 
- export default Explore
+  return (
+    <SafeAreaView className="bg-white h-full">
+      <FlatList
+        data={properties}
+        ListEmptyComponent={
+          loading ? (
+            <ActivityIndicator size="large" className="text-primary-300 mt-5" />
+          ) : (
+            <NoResults />
+          )
+        }
+        renderItem={({ item }) => (
+          <Card item={item} onPress={() => handleCardPress(item.$id)} />
+        )}
+        contentContainerClassName="pb-32"
+        columnWrapperClassName="flex gap-5 px-5"
+        keyExtractor={(item, index) => item.$id}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View className="px-5">
+            <View className="flex flex-row items-center justify-between mt-5">
+              <TouchableOpacity
+                onPress={() => router.back()}
+                // className="p-2 rounded-full bg-white shadow-md"
+                className="flex flex-row bg-primary-200 rounded-full size-11 items-center justify-center"
+              >
+                <Image source={icons.backArrow} className="w-6 h-6" />
+              </TouchableOpacity>
+              <Text className="text-base mr-2 font-rubik-medium text-black-300">
+                Search for your ideal home
+              </Text>
+              <Image source={icons.bell} className="w-6 h-6" />
+            </View>
+
+            <Search />
+
+            <View className="mt-5">
+              <Filters />
+              <Text className="text-xl font-rubik-bold text-black-300 mt-3">
+                Found {properties?.length}
+              </Text>
+            </View>
+          </View>
+        }
+      />
+    </SafeAreaView>
+  );
+}

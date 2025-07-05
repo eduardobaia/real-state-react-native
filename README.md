@@ -57,3 +57,4 @@ Join our community of developers creating universal apps.
 #Install write dependencies 
 npx expo install react-native-appwrite react-native-url-polyfill
 
+#Install use debounce for search
